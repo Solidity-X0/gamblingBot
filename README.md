@@ -1,0 +1,1 @@
+The gambling bot itself is not open source however you can verify your result using the javascript script down below. Just put in the seeds and nonce and you will be able to get all past and future rolls for your past session and thus verify fairness. Good luck
