@@ -8,11 +8,16 @@ function provablyFairHash(serverSeed, clientSeed, nonce) {
 function provablyFairFloat(hash) {
 
     // First 13 hex chars = 52 bits (safe for JS numbers)
-    const slice = hash.slice(0, 13);
-    const int = parseInt(slice, 16);
+    const slice1 = hash.slice(0, 13);
+    const slice2 = hash.slice(13, 26)
+    const int1 = parseInt(slice1, 16);
+    const int2 = parseInt(slice2, 16)
+
+    const norm1 = (int1 / Math.pow(2, 52)) * 100
+    const norm2 = (int2 / Math.pow(2, 52)) * 20
 
     // Normalize to [0, 1), then scale to [0, 100)
-    return (int / Math.pow(2, 52)) * 100;
+    return Math.max(0, norm1 - norm2);
 }
 
 const serverSeed = "YOURSERVERSEED"
