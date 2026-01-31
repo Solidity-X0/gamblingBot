@@ -1,13 +1,3 @@
-const crypto = require("node:crypto");
-
-
-function provablyFairHash(serverSeed, clientSeed, nonce) {
-    return crypto
-        .createHmac("sha256", serverSeed)
-        .update(`${clientSeed}:${nonce}`)
-        .digest("hex");
-}
-
 function provablyFairFloat(hash) {
 
     // First 13 hex chars = 52 bits (safe for JS numbers)
@@ -19,7 +9,7 @@ function provablyFairFloat(hash) {
     const int3 = parseInt(slice3, 16);
 
     const norm1 = (int1 / Math.pow(2, 52)) * 100
-    const norm2 = (int2 / Math.pow(2, 52)) * 20
+    const norm2 = (int2 / Math.pow(2, 52)) * 10
     const norm3 = (int3 / Math.pow(2, 52)) * 50
 
     let res = Math.max(0, norm1 - norm2)
@@ -29,6 +19,6 @@ function provablyFairFloat(hash) {
     if (res > 50) {
         return norm3 + 50
     }
-    
+
     return res
 }
